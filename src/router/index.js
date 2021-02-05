@@ -8,7 +8,18 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../views/user')
+    component: () => import(/* webpackChunkName: "about" */ '../views/user'),
+    meta: {
+      title: "奖品领取",
+    },
+  },
+  {
+    path: '/succeed',
+    name: 'succeed',
+    component: () => import(/* webpackChunkName: "about" */ '../views/user/succeed'),
+    meta: {
+      title: "奖品领取",
+    },
   },
   {
     path: '/about',

@@ -1,5 +1,6 @@
 <template>
   <div class="user">
+    <van-notice-bar color="#ff0000" background="#ecf9ff"  scrollable text="请正确填写信息，用于后期礼品的邮寄地址。" />
     <div class="box">
       <van-cell-group style="paddingLeft:10px">
         <van-field class="rules" label="姓名" v-model="form.user_name" placeholder="请填写真实姓名" />
@@ -31,14 +32,11 @@ export default {
     }
   },
   mounted() {
-    getStopUser().then(res => {
-      console.log(res)
-    })
   },
   methods: {
     subInfo() {
       addUser(this.form).then(res=> {
-        console.log(res)
+        this.$router.push({ name: 'succeed' })
       })
     }
   },
@@ -52,9 +50,9 @@ export default {
   background: url('../../assets/img/shenqingdan_bg.png') no-repeat;
   background-size: 100%;
   background-color: #ffffff;
-  padding: 20px;
   box-sizing: border-box;
   .box {
+    margin: 20px;
     margin-top: 50px;
     display: flex;
     flex-direction: column;
