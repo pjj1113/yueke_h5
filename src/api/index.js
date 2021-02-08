@@ -61,3 +61,10 @@ export function addUser(data) {
 		}
 	})
 }
+export function updateStopName(data) {
+  return fetchPost('/stop/user/update', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}

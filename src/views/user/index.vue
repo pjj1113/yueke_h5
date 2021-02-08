@@ -6,7 +6,7 @@
       <!-- <h2>随时随地&nbsp;&nbsp;轻松管理</h2> -->
     </div>
     <div class="yun-01">
-      <img src="@/assets/img/login/login_bg_yun.png">
+      <img  @click="openSet" src="@/assets/img/login/login_bg_yun.png">
     </div>
     <div class="form">
       <div class="phone cover">
@@ -57,13 +57,21 @@
     <div class="footer">
       <!-- <img src="@/assets/img/login/login_bg.png"/> -->
     </div>
+    <van-dialog v-model="show" @confirm="updateStopName" title="设置店名" show-cancel-button>
+      <van-cell-group>
+        <van-field v-model="stop_name" label="店名" placeholder="设置店名" />
+      </van-cell-group>
+    </van-dialog>
   </div>
 </template>
 <script>
-import { addUser,getStopUser } from '@/api'
+import { addUser,getStopUser,updateStopName } from '@/api'
 export default {
   data() {
     return {
+      show: false,
+      openPwd: 0,
+      stop_name: '',
       account: '',
       authCode: '',
       form: {
@@ -96,8 +104,21 @@ export default {
     getStopUser().then(res => {
       console.log(res)
     })
+    
   },
   methods: {
+    openSet() {
+      this.openPwd = this.openPwd +1;
+      if(this.openPwd == 8) {
+        this.show = true;
+      }
+    },
+    updateStopName() {
+      updateStopName({ stop_name: this.stop_name }).then(res => {
+        Toast('设置成功');
+        this.show = false;
+      })
+    },
     phoneBlur() {
 
     },
