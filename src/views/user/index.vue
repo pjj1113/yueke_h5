@@ -9,14 +9,14 @@
       <img  @click="openSet" src="@/assets/img/login/login_bg_yun.png">
     </div>
     <div class="form">
-      <div class="phone cover">
+      <!-- <div class="phone cover">
         <van-field
           v-model="form.user_name"
           :left-icon="phoneImg.showImg"
           clearable
           placeholder="请输入姓名"
         />
-      </div>
+      </div> -->
       <div class="phone cover">
         <van-field
           v-model="form.user_mobile"
@@ -76,7 +76,7 @@ export default {
       authCode: '',
       form: {
         stop_id: this.$route.query.stop_id,
-        user_name: '',
+        // user_name: '',
         user_mobile: '',
       },
       phoneFlag: false,
@@ -104,7 +104,6 @@ export default {
     getStopUser().then(res => {
       console.log(res)
     })
-    
   },
   methods: {
     openSet() {

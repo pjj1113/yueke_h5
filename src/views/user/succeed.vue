@@ -7,7 +7,7 @@
     <div class="main">
       <img src="../../assets/img/gongxi_icon.png"/>
       <!-- <h3>提交成功</h3> -->
-      <p>中奖结果等待管理员联系！</p>
+      <p>报名成功，请向工作人员领取礼品!</p>
 
     </div>
   </div>
