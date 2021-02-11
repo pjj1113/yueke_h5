@@ -27,18 +27,20 @@
           @blur="phoneBlur"
           @input="phoneInput"
           @focus="phoneFocus"
+          maxlength="11"
         />
       </div>
       <div class="number cover">
         <van-field
           :left-icon="authCodeImg.showImg"
-          v-model="authCode"
+          v-model="smCode"
           type="digit"
           placeholder="请输入验证码"
           @input="phoneInput"
+          maxlength="6"
         >
           <template #button>
-            <span v-if="countCodeFlag" >{{ codeInfo }}</span>
+            <span v-if="countCodeFlag" @click="getSmsCode" >{{ codeInfo }}</span>
             <span v-else class="count-code-flag">重新发送{{ countCode }}</span>
           </template>
         </van-field>
@@ -55,7 +57,7 @@
       <van-button round size="large" color="linear-gradient(to right, #BBEDE0, #A6EBF5)" type="button">登录</van-button>
     </div> -->
     <div class="footer">
-      <!-- <img src="@/assets/img/login/login_bg.png"/> -->
+      <img src="@/assets/img/home.jpg"/>
     </div>
     <van-dialog v-model="show" @confirm="updateStopName" title="设置店名" show-cancel-button>
       <van-cell-group>
@@ -65,7 +67,8 @@
   </div>
 </template>
 <script>
-import { addUser,getStopUser,updateStopName } from '@/api'
+import { addUser,getStopUser,updateStopName, getSmsCode } from '@/api';
+import { Toast } from 'vant' 
 export default {
   data() {
     return {
@@ -73,7 +76,7 @@ export default {
       openPwd: 0,
       stop_name: '',
       account: '',
-      authCode: '',
+      smCode: '',
       form: {
         stop_id: this.$route.query.stop_id,
         // user_name: '',
@@ -101,9 +104,7 @@ export default {
     }
   },
   mounted() {
-    getStopUser().then(res => {
-      console.log(res)
-    })
+    
   },
   methods: {
     openSet() {
@@ -118,6 +119,32 @@ export default {
         this.show = false;
       })
     },
+    getSmsCode() {
+      this.countCodeFlag = false;
+      
+      let that = this
+      function clearTrme() {
+        that.countCode = that.countCode - 1;
+        if(that.countCode < 1 ) {
+          window.clearInterval(trme);
+          that.countCodeFlag = true;
+          that.countCode = 59;
+          that.codeInfo = '重新发送';
+        }
+      }
+      // return
+      getSmsCode({ ...this.form }).then(res => {
+        let trme = window.setInterval(clearTrme, 1000)
+        if(res.code == 400) {
+          Toast(res.message)
+          this.countCodeFlag = true;
+          this.countCode = 0;
+          trme = null;
+          return
+        }
+        console.log(res)
+      })
+    },
     phoneBlur() {
 
     },
@@ -128,7 +155,13 @@ export default {
 
     },
     submitBtn() {
-      addUser(this.form).then(res => {
+      addUser({ ...this.form, smCode: this.smCode }).then(res => {
+        if(res.code == 400) {
+          Toast(res.message)
+          return
+        }
+        console.log(res)
+        return
         this.$router.push({ name: 'succeed' })
       })
     },
@@ -143,7 +176,7 @@ export default {
   align-items: center;
   height: 100%;
   .logo{
-    overflow: hidden;
+    // overflow: hidden;
     margin-top: 52px;
     img{
       width: 134px;
@@ -158,7 +191,7 @@ export default {
     }
   }
   .yun-01{
-    overflow: hidden;
+    // overflow: hidden;
     width: 100%;
     display: flex;
     justify-content: flex-end;
@@ -194,7 +227,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden;
+    // overflow: hidden;
     .cover{
       width: 305px;
       height: 44px;
@@ -240,12 +273,10 @@ export default {
     }
   .footer{
     width: 100%;
-    flex: 1;
     // background: url('../../assets/img/login/login_bg.png') no-repeat bottom;
     background-size: 100% 100px;
     img{
       width: 100%;
-      height: 100px;
     }
   }
   .school-popup {

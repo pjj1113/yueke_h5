@@ -51,11 +51,19 @@ export function fetchGet(url, param, config, fail = false) {
 			});
 	});
 }
+
 export function getStopUser() {
   return fetchGet('/stop/user/select')
 }
 export function addUser(data) {
   return fetchPost('/users/add', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+export function getSmsCode(data) {
+  return fetchPost('/wy/sms', data, {
 		headers: {
 			'Content-Type': 'application/json'
 		}
