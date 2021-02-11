@@ -107,6 +107,11 @@ export default {
     
   },
   methods: {
+    phoneBlur(e) {
+      if(!(/^1\d{10}$/.test(Number(e.target.value)))){
+        this.phoneFlag = true;
+      }
+    },
     openSet() {
       this.openPwd = this.openPwd +1;
       if(this.openPwd == 8) {
@@ -121,7 +126,6 @@ export default {
     },
     getSmsCode() {
       this.countCodeFlag = false;
-      
       let that = this
       function clearTrme() {
         that.countCode = that.countCode - 1;
@@ -142,27 +146,22 @@ export default {
           trme = null;
           return
         }
-        console.log(res)
       })
     },
-    phoneBlur() {
-
-    },
     phoneInput() {
-
+      value = value.replace(/[^\d]/g, '')
     },
     phoneFocus() {
-
+       this.phoneFlag = false;
     },
     submitBtn() {
       addUser({ ...this.form, smCode: this.smCode }).then(res => {
         if(res.code == 400) {
           Toast(res.message)
           return
+        } else {
+          this.$router.push({ name: 'succeed' })
         }
-        console.log(res)
-        return
-        this.$router.push({ name: 'succeed' })
       })
     },
   }
