@@ -101,6 +101,7 @@ export default {
       countCodeFlag: true,
       codeInfo:'获取验证码',
       overlayShow: false,
+      trme: null,
     }
   },
   mounted() {
@@ -119,7 +120,7 @@ export default {
       }
     },
     updateStopName() {
-      updateStopName({ stop_name: this.stop_name }).then(res => {
+      updateStopName({ stop_name: this.stop_name,stop_id: this.$route.query.stop_id }).then(res => {
         Toast('设置成功');
         this.show = false;
       })
@@ -138,17 +139,18 @@ export default {
       }
       // return
       getSmsCode({ ...this.form }).then(res => {
-        let trme = window.setInterval(clearTrme, 1000)
+        this.trme = window.setInterval(clearTrme, 1000)
         if(res.code == 400) {
           Toast(res.message)
           this.countCodeFlag = true;
           this.countCode = 0;
-          trme = null;
+          clearInterval(this.trme)
+          this.trme = null;
           return
         }
       })
     },
-    phoneInput() {
+    phoneInput(value) {
       value = value.replace(/[^\d]/g, '')
     },
     phoneFocus() {
