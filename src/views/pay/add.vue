@@ -1,9 +1,9 @@
 <template>
   <div class="pay-add">
-    <van-nav-bar title="标题" left-text="返回" right-text="添加" left-arrow @click-left="onClickLeft" @click-right="onClickRight"/>
+    <van-nav-bar title="标题" left-text="返回" left-arrow @click-left="onClickLeft"/>
     <div class="main">
       <van-form>
-        <van-field v-model="form.phone" label="手机号"  placeholder="手机号"
+        <van-field v-model="form.phone" label="手机号" maxlength="11" placeholder="手机号"
           :rules="[{ required: true, message: '请填写手机号' }]"/>
         <van-field v-model="form.name" label="姓名" placeholder="姓名"
           :rules="[{ required: true, message: '请填写姓名' }]" />
@@ -13,13 +13,14 @@
           :rules="[{ required: true, message: '请填写备注' }]"/>
       </van-form>
       <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">提交</van-button>
+        <van-button round block type="info" @click="addUser">提交</van-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { addUser } from '@/api'
 export default {
   data() {
     return {
@@ -28,9 +29,21 @@ export default {
         phone: '',
         address: '', 
         remark: '', 
-        commodityList:[],
       },
       list:[]
+    }
+  },
+  mounted() {
+
+  },
+  methods: {
+    onClickLeft() {
+      this.$router.go(-1)
+    },
+    addUser() {
+      addUser({ ...this.form }).then(res => {
+
+      })
     }
   }
 }

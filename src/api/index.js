@@ -55,13 +55,13 @@ export function fetchGet(url, param, config, fail = false) {
 export function getStopUser() {
   return fetchGet('/stop/user/select')
 }
-export function addUser(data) {
-  return fetchPost('/users/add', data, {
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	})
-}
+// export function addUser(data) {
+//   return fetchPost('/users/add', data, {
+// 		headers: {
+// 			'Content-Type': 'application/json'
+// 		}
+// 	})
+// }
 export function getSmsCode(data) {
   return fetchPost('/wy/sms', data, {
 		headers: {
@@ -71,6 +71,38 @@ export function getSmsCode(data) {
 }
 export function updateStopName(data) {
   return fetchPost('/stop/user/update', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+
+/**
+ * 新开发
+ */
+// 商品列表
+export function getCommodityTypeList() {
+  return fetchGet('/commodity/type/getlist')
+}
+
+export function getPayList(data) {
+  return fetchPost('/pay/user/list', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+// 添加用户
+export function addUser(data) {
+  return fetchPost('/user/add', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
+// 获取用户是否存在
+export function getUserDetail(data) {
+	return fetchPost('/user/getList', data, {
 		headers: {
 			'Content-Type': 'application/json'
 		}

@@ -62,6 +62,7 @@ export default {
         this.phoneFlag = true;
       }
     },
+    
     openSet() {
       this.openPwd = this.openPwd +1;
       if(this.openPwd == 8) {
@@ -75,7 +76,7 @@ export default {
        this.phoneFlag = false;
     },
     submitBtn() {
-      this.$router.push({ name: 'detail', query: { phone: this.form.phone } })
+      this.$router.push({ name: 'pay-detail', query: { phone: this.form.phone } })
     },
   }
 }

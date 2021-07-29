@@ -30,6 +30,14 @@ const routes = [
     },
   },
   {
+    path: '/pay/buy',
+    name: 'pay-buy',
+    component: () => import(/* webpackChunkName: "about" */ '../views/pay/buy'),
+    meta: {
+      title: "",
+    },
+  },
+  {
     path: '/',
     name: 'Home',
     component: () => import(/* webpackChunkName: "about" */ '../views/user'),
