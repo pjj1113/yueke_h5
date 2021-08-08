@@ -1,6 +1,6 @@
 <template>
   <div class="pay-add">
-    <van-nav-bar title="标题" left-text="返回" right-text="添加" left-arrow @click-left="onClickLeft" @click-right="addBay"/>
+    <van-nav-bar title="添加订单" left-text="返回" right-text="添加" left-arrow @click-left="onClickLeft" @click-right="addBay"/>
     <div class="main">
       <ul>
         <li v-for="(item, index) in list" :key="index">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {  getCommodityTypeList } from '@/api';
+import {  getCommodityTypeList, addPay } from '@/api';
 export default {
   data() {
     return {
@@ -53,7 +53,7 @@ export default {
       console.log(this.info)
       const { name, phone, address, remark } = this.info;
       let commodityList = JSON.stringify(this.list.filter(item => item.isSelect || item.num))
-      addUser({ name, phone, address, remark,commodityList: commodityList }).then(res => {
+      addPay({ name, phone, address, remark,commodityList: commodityList }).then(res => {
         Toast('下单成功')
       })
       //  name = '', phone= '', address, remark, commodityList,price
@@ -75,7 +75,7 @@ export default {
     height: 100%;
     padding-top: 46px;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: auto;
     ul {
       display: flex;
       flex-direction: column;

@@ -108,3 +108,11 @@ export function getUserDetail(data) {
 		}
 	})
 }
+// 添加用户
+export function addPay(data) {
+	return fetchPost('/pay/add', data, {
+		  headers: {
+			  'Content-Type': 'application/json'
+		  }
+	  })
+  }
