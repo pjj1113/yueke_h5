@@ -54,7 +54,10 @@ export default {
     }
   },
   mounted() {
-    
+    if( window.localStorage.getItem('user')) {
+      let user = JSON.parse( window.localStorage.getItem('user'))
+      this.$router.push({ name: 'pay-detail', query: { phone: user.phone } })
+    }
   },
   methods: {
     phoneBlur(e) {

@@ -100,6 +100,14 @@ export function addUser(data) {
 		}
 	})
 }
+// 修改用户
+export function updateUser(data) {
+  return fetchPost('/user/update', data, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+}
 // 获取用户是否存在
 export function getUserDetail(data) {
 	return fetchPost('/user/getList', data, {

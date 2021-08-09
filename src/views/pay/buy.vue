@@ -22,6 +22,7 @@
 
 <script>
 import {  getCommodityTypeList, addPay } from '@/api';
+import { Toast } from 'vant';
 export default {
   data() {
     return {
@@ -51,12 +52,12 @@ export default {
     },
     addBay() {
       console.log(this.info)
-      const { name, phone, address, remark } = this.info;
-      let commodityList = JSON.stringify(this.list.filter(item => item.isSelect || item.num))
+      const { name, phone, address, remark } = this.info ? this.info : JSON.parse(window.localStorage.getItem('user'));
+      let commodityList = JSON.stringify(this.list.filter(item => item.isSelect && item.num))
       addPay({ name, phone, address, remark,commodityList: commodityList }).then(res => {
         Toast('下单成功')
+        this.$router.go(-1)
       })
-      //  name = '', phone= '', address, remark, commodityList,price
     }
   }
 }

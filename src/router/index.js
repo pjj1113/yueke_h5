@@ -14,6 +14,32 @@ const routes = [
     },
   },
   {
+    path: '/home',
+    name: 'home',
+    component: () => import( '../layout'),
+    meta: {
+      title: "",
+    },
+    children: [
+      {
+        path: 'list',
+        name: 'pay-detail',
+        component: () => import(/* webpackChunkName: "about" */ '../views/pay/detail'),
+        meta: {
+          title: "",
+        },
+      },
+      {
+        path: 'me',
+        name: 'me-info',
+        component: () => import(/* webpackChunkName: "about" */ '../views/pay/add'),
+        meta: {
+          title: "",
+        },
+      }
+    ]
+  },
+  {
     path: '/detail',
     name: 'pay-detail',
     component: () => import(/* webpackChunkName: "about" */ '../views/pay/detail'),

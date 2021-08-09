@@ -1,19 +1,24 @@
 <template>
   <div class="pay-add">
-    <van-nav-bar title="我的订单" left-text="返回" right-text="添加" left-arrow @click-left="onClickLeft" @click-right="onClickRight"/>
+    <van-nav-bar title="我的订单"  right-text="添加" left-arrow @click-left="onClickLeft" @click-right="onClickRight"/>
     <div class="main">
-      <ul>
-        <li v-for="(item, index) in list" :key="index">
-          <div class="list-left">
-            <img :src="item.imgList"/>
-          </div>
-          <div class="list-right">
-            <p><span>{{ item.name }}</span></p>
-            <p><span>日期:{{ item.create_date }}</span></p>
-            <p> <span>数量：{{ item.num }}</span></p>
-          </div>
-        </li>
-      </ul>
+      <van-tabs v-model="active">
+        <van-tab v-for="(val, index1) in tabList" :key="index1" :title="val.title">
+          <ul>
+            <li v-for="(item, index) in val.list" :key="index">
+              <div class="list-left">
+                <img :src="item.imgList"/>
+              </div>
+              <div class="list-right">
+                <p><span>{{ item.name }}</span></p>
+                <p><span>日期:{{ item.creatr_date }}</span></p>
+                <p> <span>数量：{{ item.num }}</span></p>
+              </div>
+            </li>
+          </ul>
+        </van-tab>
+      </van-tabs>
+      
     </div>
   </div>
 </template>
@@ -25,7 +30,13 @@ export default {
     return {
       list:[],
       phone: this.$route.query.phone,
-      info: null
+      info: null,
+      active: '1s',
+      tabList:[
+        { title: '代发货', list: [], start: '0' },
+        { title: '配送中', list: [], start: '1' },
+        { title: '已完成', list: [], start: '2' }
+      ]
     }
   },
   mounted() {
@@ -43,6 +54,7 @@ export default {
       getUserDetail({ phone: this.phone }).then(res => {
         if(res.data) {
           this.info = res.data;
+          window.localStorage.setItem('user', JSON.stringify( this.info))
         } else {
           this.$router.push({ name: 'pay-add', query: { phone: this.phone } })
         }
@@ -50,8 +62,24 @@ export default {
     },
     getPayList() {
       getPayList({ phone: this.phone }).then(res => {
-        this.list = res.list.map(item => JSON.parse(item.commodityList));
-        console.log(this.list)
+        res.list.forEach(item => {
+          let list = []
+          JSON.parse(item.commodityList).forEach(val => {
+            list.push(val)
+          })
+          switch(item.start) {
+            case '0':
+              this.tabList[0].list = this.tabList[0].list.concat(list)
+              break;
+            case '1':
+              this.tabList[1].list = this.tabList[1].list.concat(list)
+              break;
+            case '2':
+              this.tabList[2].list = this.tabList[2].list.concat(list)
+              break;
+          }
+        });
+        console.log(this.tabList)
       })
     }
   }
