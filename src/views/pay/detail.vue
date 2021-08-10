@@ -143,7 +143,7 @@ export default {
 }
 /deep/.van-tabs__content{
   width: 100%;
-  height: 100%;
+  height:  calc(100vh - 150px);
   position: fixed;
   left: 0;
   z-index: 999;
