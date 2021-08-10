@@ -1,10 +1,10 @@
 <template>
   <div class="pay-add">
-    <van-nav-bar title="我的订单"  right-text="添加" left-arrow @click-left="onClickLeft" @click-right="onClickRight"/>
+    <van-nav-bar title="我的订单"  right-text="添加订单" left-arrow @click-left="onClickLeft" @click-right="onClickRight"/>
     <div class="main">
       <van-tabs v-model="active">
         <van-tab v-for="(val, index1) in tabList" :key="index1" :title="val.title">
-          <ul>
+          <ul class="">
             <li v-for="(item, index) in val.list" :key="index">
               <div class="list-left">
                 <img :src="item.imgList"/>
@@ -107,7 +107,7 @@ export default {
       list-style: none;
       margin: 0;
       padding: 10px 15px;
-      
+      margin-bottom: 120px;
       li {
         display: flex;
         height: 100px;
@@ -140,5 +140,13 @@ export default {
       }
     }
   }
+}
+/deep/.van-tabs__content{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  z-index: 999;
+  overflow:scroll
 }
 </style>
