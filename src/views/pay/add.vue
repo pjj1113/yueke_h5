@@ -7,7 +7,7 @@
           :rules="[{ required: true, message: '请填写手机号' }]"/>
         <van-field v-model="form.name" label="姓名" placeholder="姓名"
           :rules="[{ required: true, message: '请填写姓名' }]" />
-        <van-field v-model="form.addres" label="地址" placeholder="地址"
+        <van-field v-model="form.address" label="地址" placeholder="地址"
           :rules="[{ required: true, message: '请填写地址' }]"/>
           <van-field v-model="form.remark" label="备注" placeholder="备注"
           :rules="[{ required: true, message: '请填写备注' }]"/>
@@ -27,8 +27,8 @@ export default {
     return {
       form: {
         name: '', 
-        phone: '',
-        addres: '', 
+        phone: this.$route.query.phone,
+        address: '', 
         remark: '', 
       },
       phone: this.$route.query.phone,
